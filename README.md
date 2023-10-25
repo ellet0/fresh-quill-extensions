@@ -3,6 +3,8 @@
 A extensions for [flutter_quill](https://pub.dev/packages/flutter_quill)
 to support embed widgets like image, formula, video and more.
 
+Currently the support for **Web** is limitied.
+
  Check [Flutter Quill](https://github.com/singerdmx/flutter-quill) for details of use.
 
 

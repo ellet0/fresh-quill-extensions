@@ -151,11 +151,15 @@ class ImageVideoUtils {
 
     String? imageUrl;
     if (kIsWeb) {
-      assert(
-          webImagePickImpl != null,
-          'Please provide webImagePickImpl for Web '
-          '(check out example directory for how to do it)');
-      imageUrl = await webImagePickImpl!(onImagePickCallback);
+      if (webImagePickImpl != null) {
+        imageUrl = await webImagePickImpl(onImagePickCallback);
+        return;
+      }
+      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+      imageUrl = file?.path;
+      if (imageUrl == null) {
+        return;
+      }
     } else if (isMobile()) {
       imageUrl = await _pickImage(imageSource, onImagePickCallback);
     } else {
@@ -208,9 +212,10 @@ class ImageVideoUtils {
     String? videoUrl;
     if (kIsWeb) {
       assert(
-          webVideoPickImpl != null,
-          'Please provide webVideoPickImpl for Web '
-          '(check out example directory for how to do it)');
+        webVideoPickImpl != null,
+        'Please provide webVideoPickImpl for Web '
+        'in the options of this button',
+      );
       videoUrl = await webVideoPickImpl!(onVideoPickCallback);
     } else if (isMobile()) {
       videoUrl = await _pickVideo(videoSource, onVideoPickCallback);

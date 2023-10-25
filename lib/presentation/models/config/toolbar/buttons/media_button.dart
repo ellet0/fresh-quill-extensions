@@ -1,7 +1,7 @@
-import 'package:flutter/widgets.dart' show IconData, AutovalidateMode;
+import 'package:flutter/widgets.dart' show AutovalidateMode;
+import 'package:flutter/widgets.dart' show Color, Size;
 import 'package:flutter_quill/flutter_quill.dart';
 
-import '../../../../../logic/shims/dart_ui_real.dart';
 import '../../../../embeds/embed_types.dart';
 
 class QuillToolbarMediaButtonExtraOptions

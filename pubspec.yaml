@@ -3,6 +3,11 @@ description: Embed extensions for flutter_quill including image, video, formula 
 version: 0.0.1
 homepage: https://github.com/singerdmx/flutter-quill
 repository: https://github.com/freshtechtips/fresh-quill-extensions
+topics:
+ - ui
+ - widgets
+ - widget
+ - rich-text-editor
 platforms:
   android:
   ios:
@@ -18,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   # flutter_quill: ^7.10.0
   # In case you are working on changes for both libraries,
   flutter_quill:
@@ -32,7 +38,7 @@ dependencies:
   path: ^1.8.3
   image_picker: ^1.0.4
   math_keyboard: ^0.2.1
-  url_launcher: ^6.1.14
+  url_launcher: ^6.2.0
   meta: ^1.9.1
 
 dev_dependencies:

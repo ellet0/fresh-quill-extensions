@@ -21,7 +21,6 @@ class QuillToolbarMediaButton extends StatelessWidget {
   QuillToolbarMediaButton({
     required this.controller,
     required this.options,
-    // this.dialogBarrierColor = Colors.black54,
     super.key,
   }) : assert(options.type == QuillMediaType.image,
             'Video selection is not supported yet');
@@ -487,7 +486,10 @@ class TextButtonWithIcon extends StatelessWidget {
     final buttonStyle = TextButtonTheme.of(context).style;
     final shape = buttonStyle?.shape?.resolve({}) ??
         const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)));
+          borderRadius: BorderRadius.all(
+            Radius.circular(4),
+          ),
+        );
     return Material(
       shape: shape,
       textStyle: textStyle ??
@@ -514,18 +516,18 @@ class TextButtonWithIcon extends StatelessWidget {
 }
 
 /// Default file picker.
-Future<QuillFile?> _defaultMediaPicker(QuillMediaType mediaType) async {
-  final pickedFile = mediaType.isImage
-      ? await ImagePicker().pickImage(source: ImageSource.gallery)
-      : await ImagePicker().pickVideo(source: ImageSource.gallery);
+// Future<QuillFile?> _defaultMediaPicker(QuillMediaType mediaType) async {
+//   final pickedFile = mediaType.isImage
+//       ? await ImagePicker().pickImage(source: ImageSource.gallery)
+//       : await ImagePicker().pickVideo(source: ImageSource.gallery);
 
-  if (pickedFile != null) {
-    return QuillFile(
-      name: pickedFile.name,
-      path: pickedFile.path,
-      bytes: await pickedFile.readAsBytes(),
-    );
-  }
+//   if (pickedFile != null) {
+//     return QuillFile(
+//       name: pickedFile.name,
+//       path: pickedFile.path,
+//       bytes: await pickedFile.readAsBytes(),
+//     );
+//   }
 
-  return null;
-}
+//   return null;
+// }

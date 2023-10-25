@@ -1,6 +1,8 @@
 library fresh_quill_extensions;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:meta/meta.dart' show immutable;
 
 import 'presentation/embeds/editor/image.dart';
 import 'presentation/embeds/editor/image_web.dart';
@@ -27,7 +29,10 @@ export 'presentation/embeds/toolbar/utils/image_video_utils.dart';
 export 'presentation/embeds/toolbar/video_button.dart';
 export 'presentation/embeds/utils.dart';
 
+@immutable
 class FlutterQuillEmbeds {
+  const FlutterQuillEmbeds._();
+
   /// Returns a list of embed builders for QuillEditor.
   ///
   /// This method provides a collection of embed builders to enhance the
@@ -68,6 +73,12 @@ class FlutterQuillEmbeds {
     QuillEditorVideoEmbedConfigurations? videoEmbedConfigurations =
         const QuillEditorVideoEmbedConfigurations(),
   }) {
+    if (kIsWeb) {
+      throw UnsupportedError(
+        'The editorBuilders() is not for web, please use editorBuilders() '
+        'instead',
+      );
+    }
     return [
       if (imageEmbedConfigurations != null)
         QuillImageEmbedBuilder(
@@ -101,10 +112,17 @@ class FlutterQuillEmbeds {
   static List<EmbedBuilder> editorsWebBuilders({
     QuillWebImageEmbedConfigurations? imageEmbedConfigurations =
         const QuillWebImageEmbedConfigurations(),
-  }) =>
-      [
-        if (imageEmbedConfigurations != null) const ImageEmbedBuilderWeb(),
-      ];
+  }) {
+    if (!kIsWeb) {
+      throw UnsupportedError(
+        'The editorsWebBuilders() is only for web, please use editorBuilders() '
+        'instead',
+      );
+    }
+    return [
+      if (imageEmbedConfigurations != null) const ImageEmbedBuilderWeb(),
+    ];
+  }
 
   /// Returns a list of embed button builders to customize the toolbar buttons.
   ///
