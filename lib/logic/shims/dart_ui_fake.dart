@@ -1,4 +1,4 @@
-import 'package:universal_html/html.dart' as html;
+// import 'package:universal_html/html.dart' as html;
 
 // Fake interface for the logic that this package needs from (web-only) dart:ui.
 // This is conditionally exported so the analyzer sees these methods as
