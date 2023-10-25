@@ -147,6 +147,7 @@ class FlutterQuillEmbeds {
   ///
   ///
   /// The returned list contains embed button builders for the Quill toolbar.
+  /// the [formulaButtonOptions] will be disabled by default on web
   static List<EmbedButtonBuilder> toolbarButtons({
     QuillToolbarImageButtonOptions? imageButtonOptions =
         const QuillToolbarImageButtonOptions(),
@@ -182,7 +183,7 @@ class FlutterQuillEmbeds {
                 controller: mediaButtonOptions.controller ?? controller,
                 options: mediaButtonOptions,
               ),
-        if (formulaButtonOptions != null)
+        if (formulaButtonOptions != null && !kIsWeb)
           (controller, toolbarIconSize, iconTheme, dialogTheme) =>
               QuillToolbarFormulaButton(
                 controller: formulaButtonOptions.controller ?? controller,

@@ -1,17 +1,34 @@
 # Flutter Quill Extensions
 
-A extensions for [flutter_quill](https://pub.dev/packages/flutter_quill)
+A extensions for [flutter_quill](https://pub.dev/packages/flutter_quill) based on [flutter_quill_extensions](https://pub.dev/packages/flutter_quill_extensions)
 to support embed widgets like image, formula, video and more.
 
 Currently the support for **Web** is limitied.
 
  Check [Flutter Quill](https://github.com/singerdmx/flutter-quill) for details of use.
 
+ ## Table of Contents
+
+- [Flutter Quill Extensions](#flutter-quill-extensions)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Installation](#installation)
+  - [Platform Spesefic Configurations](#platform-spesefic-configurations)
+  - [Usage](#usage)
+  - [Features](#features)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Acknowledgments](#acknowledgments)
+
+
+## About
+Flutter quill is a rich editor text and it's allow you to customize a lot of things, it has custom embed builders which allow you to render custom widgets in the editor <br>
+this is a extensions to extends it functionallities by adding more features like images, videos, and more
 
 ## Installation
 
 Before start using this package, please make sure to install
-[flutter_quill_extensions](https://github.com/singerdmx/flutter-quill) package first and follow it's usage instructions.
+[flutter_quill](https://github.com/singerdmx/flutter-quill) package first and follow it's usage instructions.
 
 ```yaml
 dependencies:
@@ -26,7 +43,7 @@ dependencies:
     git: https://github.com/freshtechtips/fresh-quill-extensions.git
 ```
 
-## Platform spesefic configurations
+## Platform Spesefic Configurations
 
 >
 > 1. We are using [`gal`](https://github.com/natsuk4ze/) plugin to save images.
@@ -50,6 +67,7 @@ Before starting using this package you must follow the setup
 Set the `embedBuilders` and `embedToolbar` params in configurations of `QuillEditor` and `QuillToolbar` with the
 values provided by this repository.
 
+**Quill toolbar**:
 ```dart
 QuillToolbar(
   configurations: QuillToolbarConfigurations(
@@ -64,6 +82,7 @@ QuillToolbar(
 ),
 ```
 
+**Quill Editor**
 ```dart
 Expanded(
   child: QuillEditor.basic(
@@ -79,3 +98,68 @@ Expanded(
   ),
 )
 ```
+
+They both should be have a parent `QuillProvider` in the widget tree and setup properly <br>
+Example:
+
+```dart
+QuillProvider(
+  configurations: QuillConfigurations(
+    controller: _controller,
+    sharedConfigurations: const QuillSharedConfigurations(),
+  ),
+  child: Column(
+    children: [
+      QuillToolbar(
+        configurations: QuillToolbarConfigurations(
+          embedButtons: FlutterQuillEmbeds.toolbarButtons(
+            imageButtonOptions: QuillToolbarImageButtonOptions(),
+          ),
+        ),
+      ),
+      Expanded(
+        child: QuillEditor.basic(
+          configurations: QuillEditorConfigurations(
+            padding: const EdgeInsets.all(16),
+            embedBuilders: FlutterQuillEmbeds.editorBuilders(),
+          ),
+        ),
+      )
+    ],
+  ),
+)
+```
+
+For web, use:
+```dart
+FlutterQuillEmbeds.editorsWebBuilders()
+```
+
+## Features
+
+```markdown
+## Features
+
+- Easy to use and customizable
+- Has the option to use custom image provider for the images
+- Usefull utilities and widgets
+- Handle different errors
+```
+
+## Contributing
+
+We welcome contributions!
+
+Please follow these guidelines when contributing to our project. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
+
+Please notice the license can be changed, but it will still be open source.
+
+## Acknowledgments
+
+- Thanks to the [Flutter Team](https://flutter.dev/)
+- Thanks to [flutter_quill_extensions](https://pub.dev/packages/flutter_quill_extensions) 
+- Thanks to [flutter_quill](https://pub.dev/packages/flutter_quill)
