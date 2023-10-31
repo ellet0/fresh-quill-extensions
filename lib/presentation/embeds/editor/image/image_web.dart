@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:universal_html/html.dart' as html;
 
-import '../../../logic/shims/dart_ui_fake.dart'
-    if (dart.library.html) '../../../logic/shims/dart_ui_real.dart' as ui;
+import 'shims/dart_ui_fake.dart'
+    if (dart.library.html) 'shims/dart_ui_real.dart' as ui;
 
 class ImageEmbedBuilderWeb extends EmbedBuilder {
   const ImageEmbedBuilderWeb({

@@ -131,6 +131,6 @@ class QuillEditorImageEmbedConfigurations {
 }
 
 @immutable
-class QuillWebImageEmbedConfigurations {
-  const QuillWebImageEmbedConfigurations();
+class QuillEditorWebImageEmbedConfigurations {
+  const QuillEditorWebImageEmbedConfigurations();
 }

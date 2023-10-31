@@ -7,6 +7,7 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/translations.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../logic/extensions/controller.dart';
 import '../../embed_types.dart';
 
 class LinkDialog extends StatefulWidget {
@@ -146,9 +147,6 @@ class ImageVideoUtils {
     FilePickImpl? filePickImpl,
     WebImagePickImpl? webImagePickImpl,
   }) async {
-    final index = controller.selection.baseOffset;
-    final length = controller.selection.extentOffset - index;
-
     String? imageUrl;
     if (kIsWeb) {
       if (webImagePickImpl != null) {
@@ -168,9 +166,13 @@ class ImageVideoUtils {
           await _pickImageDesktop(context, filePickImpl!, onImagePickCallback);
     }
 
-    if (imageUrl != null) {
-      controller.replaceText(index, length, BlockEmbed.image(imageUrl), null);
+    if (imageUrl == null) {
+      return;
     }
+
+    controller.insertImageBlock(
+      imageUrl: imageUrl,
+    );
   }
 
   static Future<String?> _pickImage(

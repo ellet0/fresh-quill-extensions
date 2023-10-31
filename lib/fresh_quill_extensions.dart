@@ -4,9 +4,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:meta/meta.dart' show immutable;
 
-import 'presentation/embeds/editor/image.dart';
-import 'presentation/embeds/editor/image_web.dart';
+import 'presentation/embeds/editor/image/image.dart';
+import 'presentation/embeds/editor/image/image_web.dart';
 import 'presentation/embeds/editor/video.dart';
+import 'presentation/embeds/editor/webview.dart';
 import 'presentation/embeds/toolbar/camera_button.dart';
 import 'presentation/embeds/toolbar/formula_button.dart';
 import 'presentation/embeds/toolbar/image_button.dart';
@@ -14,12 +15,15 @@ import 'presentation/embeds/toolbar/media_button.dart';
 import 'presentation/embeds/toolbar/video_button.dart';
 import 'presentation/models/config/editor/image.dart';
 import 'presentation/models/config/editor/video.dart';
+import 'presentation/models/config/editor/webview.dart';
 import 'presentation/models/config/toolbar/buttons/camera.dart';
 import 'presentation/models/config/toolbar/buttons/formula.dart';
 import 'presentation/models/config/toolbar/buttons/image.dart';
 import 'presentation/models/config/toolbar/buttons/media_button.dart';
 import 'presentation/models/config/toolbar/buttons/video.dart';
 
+export '/presentation/models/config/editor/webview.dart';
+export 'presentation/embeds/editor/unknown.dart';
 export 'presentation/embeds/embed_types.dart';
 export 'presentation/embeds/toolbar/camera_button.dart';
 export 'presentation/embeds/toolbar/formula_button.dart';
@@ -28,6 +32,8 @@ export 'presentation/embeds/toolbar/media_button.dart';
 export 'presentation/embeds/toolbar/utils/image_video_utils.dart';
 export 'presentation/embeds/toolbar/video_button.dart';
 export 'presentation/embeds/utils.dart';
+export 'presentation/models/config/editor/image.dart';
+export 'presentation/models/config/toolbar/buttons/image.dart';
 
 @immutable
 class FlutterQuillEmbeds {
@@ -50,14 +56,6 @@ class FlutterQuillEmbeds {
   ///  QuillEditor
   /// to enable embedded content features like images, videos, and formulas.
   ///
-  /// Example usage:
-  /// ```dart
-  /// final embedBuilders = QuillEmbedBuilders.builders(
-  ///   onVideoInit: (videoContainerKey) {
-  ///     // Custom video initialization logic
-  ///   },
-  ///   // Customize other callback functions as needed
-  /// );
   ///
   /// final quillEditor = QuillEditor(
   ///   // Other editor configurations
@@ -72,6 +70,8 @@ class FlutterQuillEmbeds {
         const QuillEditorImageEmbedConfigurations(),
     QuillEditorVideoEmbedConfigurations? videoEmbedConfigurations =
         const QuillEditorVideoEmbedConfigurations(),
+    QuillEditorWebViewEmbedConfigurations? webViewEmbedConfigurations =
+        const QuillEditorWebViewEmbedConfigurations(),
   }) {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -81,7 +81,7 @@ class FlutterQuillEmbeds {
     }
     return [
       if (imageEmbedConfigurations != null)
-        QuillImageEmbedBuilder(
+        QuillEditorImageEmbedBuilder(
           configurations: QuillEditorImageEmbedConfigurations(
             imageErrorWidgetBuilder:
                 imageEmbedConfigurations.imageErrorWidgetBuilder,
@@ -101,6 +101,10 @@ class FlutterQuillEmbeds {
           configurations: videoEmbedConfigurations,
         ),
       const QuillEditorFormulaEmbedBuilder(),
+      if (webViewEmbedConfigurations != null)
+        QuillEditorWebViewEmbedBuilder(
+          configurations: webViewEmbedConfigurations,
+        )
     ];
   }
 
@@ -110,8 +114,8 @@ class FlutterQuillEmbeds {
   ///  images on the web.
   ///
   static List<EmbedBuilder> editorsWebBuilders({
-    QuillWebImageEmbedConfigurations? imageEmbedConfigurations =
-        const QuillWebImageEmbedConfigurations(),
+    QuillEditorWebImageEmbedConfigurations? imageEmbedConfigurations =
+        const QuillEditorWebImageEmbedConfigurations(),
   }) {
     if (!kIsWeb) {
       throw UnsupportedError(

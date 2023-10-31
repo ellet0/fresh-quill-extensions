@@ -146,14 +146,6 @@ class QuillToolbarImageButton extends StatelessWidget {
           'Sorry but this is the Image button and not the video one',
         );
     }
-
-    // This will not work for the pick image using camera (bug fix)
-    // if (source != null) {
-    //   if (source == MediaPickSetting.Gallery) {
-
-    //   } else {
-    //     _typeLink(context);
-    //   }
   }
 
   void _pickImage(BuildContext context) => ImageVideoUtils.handleImageButtonTap(

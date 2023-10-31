@@ -7,15 +7,15 @@ import 'package:flutter_quill/extensions.dart' as base;
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/translations.dart';
 
-import '../../models/config/editor/image.dart';
-import '../embed_types.dart';
-import '../utils.dart';
-import '../widgets/image.dart';
-import '../widgets/image_resizer.dart';
-import '../widgets/simple_dialog_item.dart';
+import '../../../models/config/editor/image.dart';
+import '../../embed_types.dart';
+import '../../utils.dart';
+import '../../widgets/image.dart';
+import '../../widgets/image_resizer.dart';
+import '../../widgets/simple_dialog_item.dart';
 
-class QuillImageEmbedBuilder extends EmbedBuilder {
-  QuillImageEmbedBuilder({
+class QuillEditorImageEmbedBuilder extends EmbedBuilder {
+  QuillEditorImageEmbedBuilder({
     required this.configurations,
   });
   final QuillEditorImageEmbedConfigurations configurations;
@@ -124,8 +124,10 @@ class QuillImageEmbedBuilder extends EmbedBuilder {
                         getEmbedNode(controller, controller.selection.start)
                             .value;
                     final imageUrl = imageNode.value.data;
-                    controller.copiedImageUrl =
-                        ImageUrl(imageUrl, getImageStyleString(controller));
+                    controller.copiedImageUrl = ImageUrl(
+                      imageUrl,
+                      getImageStyleString(controller),
+                    );
                     Navigator.pop(context);
                   },
                 );
@@ -255,79 +257,80 @@ Widget _menuOptionsForReadonlyImage({
   required ImageEmbedBuilderErrorWidgetBuilder? imageErrorWidgetBuilder,
 }) {
   return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            final saveOption = SimpleDialogItem(
-              icon: Icons.save,
-              color: Colors.greenAccent,
-              text: 'Save'.i18n,
-              onPressed: () async {
-                imageUrl = appendFileExtensionToImageUrl(imageUrl);
-                final messenger = ScaffoldMessenger.of(context);
-                Navigator.of(context).pop();
+    onTap: () {
+      showDialog(
+        context: context,
+        builder: (context) {
+          final saveOption = SimpleDialogItem(
+            icon: Icons.save,
+            color: Colors.greenAccent,
+            text: 'Save'.i18n,
+            onPressed: () async {
+              imageUrl = appendFileExtensionToImageUrl(imageUrl);
+              final messenger = ScaffoldMessenger.of(context);
+              Navigator.of(context).pop();
 
-                final saveImageResult = await saveImage(imageUrl);
-                final imageSavedSuccessfully = saveImageResult.isSuccess;
+              final saveImageResult = await saveImage(imageUrl);
+              final imageSavedSuccessfully = saveImageResult.isSuccess;
 
-                messenger.clearSnackBars();
+              messenger.clearSnackBars();
 
-                if (!imageSavedSuccessfully) {
-                  messenger.showSnackBar(SnackBar(
-                      content: Text(
-                    'Error while saving image'.i18n,
-                  )));
-                  return;
-                }
+              if (!imageSavedSuccessfully) {
+                messenger.showSnackBar(SnackBar(
+                    content: Text(
+                  'Error while saving image'.i18n,
+                )));
+                return;
+              }
 
-                String message;
-                switch (saveImageResult.method) {
-                  case SaveImageResultMethod.network:
-                    message = 'Saved using the network'.i18n;
-                    break;
-                  case SaveImageResultMethod.localStorage:
-                    message = 'Saved using the local storage'.i18n;
-                    break;
-                }
+              String message;
+              switch (saveImageResult.method) {
+                case SaveImageResultMethod.network:
+                  message = 'Saved using the network'.i18n;
+                  break;
+                case SaveImageResultMethod.localStorage:
+                  message = 'Saved using the local storage'.i18n;
+                  break;
+              }
 
-                messenger.showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                  ),
-                );
-              },
-            );
-            final zoomOption = SimpleDialogItem(
-              icon: Icons.zoom_in,
-              color: Colors.cyanAccent,
-              text: 'Zoom'.i18n,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ImageTapWrapper(
-                      imageUrl: imageUrl,
-                      imageProviderBuilder: imageProviderBuilder,
-                      imageErrorWidgetBuilder: imageErrorWidgetBuilder,
-                    ),
-                  ),
-                );
-              },
-            );
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-              child: SimpleDialog(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(message),
+                ),
+              );
+            },
+          );
+          final zoomOption = SimpleDialogItem(
+            icon: Icons.zoom_in,
+            color: Colors.cyanAccent,
+            text: 'Zoom'.i18n,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ImageTapWrapper(
+                    imageUrl: imageUrl,
+                    imageProviderBuilder: imageProviderBuilder,
+                    imageErrorWidgetBuilder: imageErrorWidgetBuilder,
                   ),
                 ),
-                children: [saveOption, zoomOption],
+              );
+            },
+          );
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+            child: SimpleDialog(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
               ),
-            );
-          },
-        );
-      },
-      child: image);
+              children: [saveOption, zoomOption],
+            ),
+          );
+        },
+      );
+    },
+    child: image,
+  );
 }
