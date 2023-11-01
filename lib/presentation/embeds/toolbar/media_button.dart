@@ -383,7 +383,7 @@ class _MediaLinkDialogState extends State<MediaLinkDialog> {
 
   String? _validateLink(String? value) {
     if ((value?.isEmpty ?? false) ||
-        !AutoFormatMultipleLinksRule.oneLineRegExp.hasMatch(value!)) {
+        !AutoFormatMultipleLinksRule.oneLineLinkRegExp.hasMatch(value!)) {
       return widget.validationMessage ?? 'That is not a valid URL';
     }
 
