@@ -1,6 +1,6 @@
 name: fresh_quill_extensions
 description: Embed extensions for flutter_quill including image, video, formula and etc.
-version: 0.0.2
+version: 0.0.4
 homepage: https://github.com/singerdmx/flutter-quill
 repository: https://github.com/freshtechtips/fresh-quill-extensions
 topics:
@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_quill: ^8.1.3
+  flutter_quill: ^8.1.4
   # In case you are working on changes for both libraries,
   # flutter_quill:
   #   path: ./../flutter-quill
