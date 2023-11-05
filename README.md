@@ -7,6 +7,8 @@ Currently the support for **Web** is limitied.
 
  Check [Flutter Quill](https://github.com/singerdmx/flutter-quill) for details of use.
 
+ **Important Note**: This package is no longer maintained, it has been moved to [flutter_quill_extensions](https://pub.dev/packages/flutter_quill_extensions)
+
  ## Table of Contents
 
 - [Flutter Quill Extensions](#flutter-quill-extensions)
